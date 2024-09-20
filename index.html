@@ -219,12 +219,18 @@
             font-family: monospace;
         }
 
+        .preview p code {
+            border: none;
+        }
+
         .preview pre {
             background-color: var(--code-bg);
             padding: 1em;
             border-radius: 4px;
             overflow-x: auto;
             position: relative;
+            border: 1px solid var(--border-color); /* Add this line for the outline */
+            margin: 1em 0; /* Add some vertical margin for better spacing */
         }
 
         .preview blockquote {
