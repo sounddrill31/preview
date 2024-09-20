@@ -229,8 +229,24 @@
             border-radius: 4px;
             overflow-x: auto;
             position: relative;
-            border: 1px solid var(--border-color); /* Add this line for the outline */
-            margin: 1em 0; /* Add some vertical margin for better spacing */
+            border: 1px solid var(--border-color);
+            margin: 1em 0;
+        }
+
+        .dark-mode .preview pre {
+            border-color: #4a6785;
+        }
+
+        .preview pre::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 2px 6px;
+            font-size: 12px;
+            color: #fff;
+            background-color: var(--primary-color);
+            border-bottom-left-radius: 4px;
         }
 
         .preview blockquote {
@@ -338,15 +354,19 @@
                     break;
             }
 
-            // Add copy buttons to code blocks
+            // Add copy buttons and language labels to code blocks
             const codeBlocks = preview.querySelectorAll('pre');
             codeBlocks.forEach(block => {
+                const code = block.querySelector('code');
+                const lang = code.className.replace('language-', '');
+                
+                block.setAttribute('data-language', lang);
+
                 const copyButton = document.createElement('button');
                 copyButton.textContent = 'Copy';
                 copyButton.className = 'copy-button';
                 copyButton.addEventListener('click', () => {
-                    const code = block.querySelector('code').textContent;
-                    navigator.clipboard.writeText(code).then(() => {
+                    navigator.clipboard.writeText(code.textContent).then(() => {
                         copyButton.textContent = 'Copied!';
                         setTimeout(() => {
                             copyButton.textContent = 'Copy';
