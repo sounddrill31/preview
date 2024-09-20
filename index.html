@@ -399,13 +399,24 @@
             darkModeToggle.classList.toggle('active');
         }
 
+        function setInitialDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.classList.add('active');
+            }
+        }
+
         editor.addEventListener('input', updatePreview);
         languageSelect.addEventListener('change', updatePreview);
         toggleViewBtn.addEventListener('click', toggleView);
         darkModeToggle.addEventListener('click', toggleDarkMode);
 
+        // Set initial dark mode state
+        setInitialDarkMode();
+
+        // Listen for changes in color scheme preference
+        window.matchMedia('(prefers-color-scheme: dark)').addListener(setInitialDarkMode);
+
         // Initial preview update
         updatePreview();
     </script>
-</body>
-</html>
